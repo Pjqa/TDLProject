@@ -1,5 +1,8 @@
 package com.qa.projecttwo.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,4 +34,8 @@ public class ItemsService {
 		return this.mapToDto(this.repo.save(items));
 	}
 
+	//READ
+	public List<ItemsDto> readAll(){
+		return this.repo.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
+	}
 }
