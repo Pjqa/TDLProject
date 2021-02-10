@@ -43,4 +43,10 @@ public class ItemsService {
 	public ItemsDto readById(Long id) {
 	return this.mapToDto(this.repo.findById(id).orElseThrow());
 	}
+	
+	//DELETE
+	public boolean delete(Long id) {
+		this.repo.deleteById(id);
+		return !this.repo.existsById(id);		
+	}
 }
