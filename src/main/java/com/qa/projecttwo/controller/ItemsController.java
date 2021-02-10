@@ -36,4 +36,9 @@ public class ItemsController {
 		return new ResponseEntity<>(created, HttpStatus.CREATED);
 	}
 	
+	//READ
+	@GetMapping("/read")
+	public ResponseEntity<List<ItemsDto>> read(){
+		return ResponseEntity.ok(this.service.readAll());
+	}
 }
