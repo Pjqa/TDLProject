@@ -38,4 +38,9 @@ public class ItemsService {
 	public List<ItemsDto> readAll(){
 		return this.repo.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
 	}
+	
+	//READ ID
+	public ItemsDto readById(Long id) {
+	return this.mapToDto(this.repo.findById(id).orElseThrow());
+	}
 }
