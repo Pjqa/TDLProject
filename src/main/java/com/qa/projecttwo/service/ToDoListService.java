@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.qa.projecttwo.dto.ToDoListDto;
 import com.qa.projecttwo.persistence.domain.ToDoList;
+import com.qa.projecttwo.persistence.repo.ToDoListRepo;
 
 @Service
 public class ToDoListService {
@@ -35,7 +36,7 @@ public class ToDoListService {
 	
 	//READ
 	public List<ToDoListDto> readAll (){
-		return this.repo.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
+		return this.repo.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
 	}
 	
 	//READ ID
