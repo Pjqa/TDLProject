@@ -1,5 +1,8 @@
 package com.qa.projecttwo.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,11 @@ public class ToDoListService {
 	//CREATE
 	public ToDoListDto create (ToDoList toDoList) {
 		return this.mapToDto(this.repo.save(toDoList));
+	}
+	
+	//READ
+	public List<ToDoListDto> readAll (){
+		return this.repo.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
 	}
 	
 	
