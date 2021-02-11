@@ -38,5 +38,9 @@ public class ToDoListService {
 		return this.repo.findAll().stream().map(this::mapToDTO).collect(Collectors.toList());
 	}
 	
+	//READ ID
+	public ToDoListDto readById (Long id) {
+		return this.mapToDto(this.repo.findById(id).orElseThrow());
+	}
 	
 }
