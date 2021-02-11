@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.qa.projecttwo.dto.ItemsDto;
 import com.qa.projecttwo.persistence.domain.Items;
 import com.qa.projecttwo.persistence.repo.ItemsRepo;
+import com.qa.projecttwo.utilis.SpringBean;
 
 @Service
 public class ItemsService {
@@ -48,5 +49,13 @@ public class ItemsService {
 	public boolean delete(Long id) {
 		this.repo.deleteById(id);
 		return !this.repo.existsById(id);		
+	}
+	
+	//UPDATE
+	public ItemsDto update(ItemsDto itemsDto, Long id) {
+		Items toUpdate = this.repo.findById(id).orElseThrow();
+		toUpdate.setName(itemsDto.getName());
+		SpringBean.mergeNotNull(itemsDto, toUpdate);
+		return this.mapToDto(this.repo.save(toUpdate));
 	}
 }
