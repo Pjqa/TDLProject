@@ -1,6 +1,7 @@
 package com.qa.projecttwo.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,4 +63,10 @@ public class ToDoListController {
 	public ResponseEntity <ToDoListDto> update (@PathVariable Long id, @RequestBody ToDoListDto toDoListDto){
 		return new ResponseEntity <> (this.service.update(toDoListDto, id),HttpStatus.ACCEPTED);
 	}
+	
+	//CUSTOMMETHODS
+	@GetMapping ("/findByName/{name}")
+	public ResponseEntity <List<ToDoListDto>> findByName (@PathVariable String name){
+		return ResponseEntity.ok(this.service.findByName(name));
+		}
 }
