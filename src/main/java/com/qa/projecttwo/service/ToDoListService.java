@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.qa.newbarn.utils.SpringBean;
 import com.qa.projecttwo.dto.ToDoListDto;
 import com.qa.projecttwo.persistence.domain.ToDoList;
 import com.qa.projecttwo.persistence.repo.ToDoListRepo;
@@ -48,5 +49,13 @@ public class ToDoListService {
 	public boolean delete(Long id) {
 		this.repo.deleteById(id);
 		return !this.repo.existsById(id);
+	}
+	
+	//UPDATE
+	public ToDoListDto update (ToDoListDto toDoListDto, Long id) {
+		ToDoList toUpdate = this.repo.findById(id).orElseThrow();
+		toUpdate.setName(toDoListDto.getName());
+		SpringBean.mergeNotNull(toDoListDto, toUpdate);
+		return this.mapToDTO(this.repo.save(toUpdate));
 	}
 }
