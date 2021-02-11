@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.qa.projecttwo.ToDoListNotFoundException;
 import com.qa.projecttwo.dto.ToDoListDto;
 import com.qa.projecttwo.persistence.domain.ToDoList;
 import com.qa.projecttwo.persistence.repo.ToDoListRepo;
@@ -42,7 +43,7 @@ public class ToDoListService {
 	
 	//READ ID
 	public ToDoListDto readById (Long id) {
-		return this.mapToDto(this.repo.findById(id).orElseThrow());
+		return this.mapToDto(this.repo.findById(id).orElseThrow(ToDoListNotFoundException :: new));
 	}
 	
 	//DELETE
@@ -53,7 +54,7 @@ public class ToDoListService {
 	
 	//UPDATE
 	public ToDoListDto update (ToDoListDto toDoListDto, Long id) {
-		ToDoList toUpdate = this.repo.findById(id).orElseThrow();
+		ToDoList toUpdate = this.repo.findById(id).orElseThrow(ToDoListNotFoundException :: new);
 		toUpdate.setName(toDoListDto.getName());
 		SpringBean.mergeNotNull(toDoListDto, toUpdate);
 		return this.mapToDto(this.repo.save(toUpdate));
