@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,13 +41,13 @@ public class ItemsController {
 	
 	//READ
 	@GetMapping("/read")
-	public ResponseEntity<List<ItemsDto>> read(){
+	public ResponseEntity<List<ItemsDto>> read (){
 		return ResponseEntity.ok(this.service.readAll());
 	}
 	
 	//READ ID
 	@GetMapping("/read/{id}")
-	public ResponseEntity <ItemsDto> readSolo(@PathVariable Long id){
+	public ResponseEntity <ItemsDto> readSolo (@PathVariable Long id){
 		return ResponseEntity.ok(this.service.readById(id));
 	}
 	
@@ -55,4 +56,10 @@ public class ItemsController {
 	public ResponseEntity <ItemsDto> delete (@PathVariable Long id){
 		return this.service.delete(id)? new ResponseEntity <> (HttpStatus.NO_CONTENT): new ResponseEntity <> (HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	//UPDATE
+	@PutMapping("/update/{id}")
+	public ResponseEntity <ItemsDto> update (@PathVariable Long id, @RequestBody ItemsDto itemsDto){
+		return new ResponseEntity<>(this.service.update(itemsDto, id),HttpStatus.ACCEPTED);
 	}
+}
