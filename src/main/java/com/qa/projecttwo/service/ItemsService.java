@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.qa.projecttwo.ItemsNotFoundException;
 import com.qa.projecttwo.dto.ItemsDto;
 import com.qa.projecttwo.persistence.domain.Items;
 import com.qa.projecttwo.persistence.repo.ItemsRepo;
@@ -42,7 +43,7 @@ public class ItemsService {
 	
 	//READ ID
 	public ItemsDto readById(Long id) {
-	return this.mapToDto(this.repo.findById(id).orElseThrow());
+	return this.mapToDto(this.repo.findById(id).orElseThrow(ItemsNotFoundException :: new));
 	}
 	
 	//DELETE
@@ -53,7 +54,7 @@ public class ItemsService {
 	
 	//UPDATE
 	public ItemsDto update(ItemsDto itemsDto, Long id) {
-		Items toUpdate = this.repo.findById(id).orElseThrow();
+		Items toUpdate = this.repo.findById(id).orElseThrow(ItemsNotFoundException :: new);
 		toUpdate.setName(itemsDto.getName());
 		SpringBean.mergeNotNull(itemsDto, toUpdate);
 		return this.mapToDto(this.repo.save(toUpdate));
