@@ -17,7 +17,7 @@ public class ToDoListService {
 	
 	private ModelMapper mapper;
 	
-	private ToDoListDto mapToDto(ToDoList toDoList) {
+	private ToDoListDto mapToDto (ToDoList toDoList) {
 		return this.mapper.map(toDoList, ToDoListDto.class);
 	}
 	
