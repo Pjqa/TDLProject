@@ -26,7 +26,7 @@ public class Items {
 	private boolean completed;
 	
 	@ManyToOne
-	private ToDoList todolist;
+	private ToDoList todolist = null;
 
 	public Items(@NotNull String name, @NotNull String description, @NotNull boolean completed) {
 		super();
