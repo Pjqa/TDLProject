@@ -19,68 +19,71 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.qa.projecttwo.dto.ItemsDto;
+import com.qa.projecttwo.dto.ToDoListDto;
 import com.qa.projecttwo.persistence.domain.Items;
-import com.qa.projecttwo.service.ItemsService;
+import com.qa.projecttwo.persistence.domain.ToDoList;
+import com.qa.projecttwo.service.ToDoListService;
 
 @SpringBootTest
 @ActiveProfiles("dev")
-public class ItemsControllerTest {
-
+public class ToDoListControllerTest {
+	
 	@Autowired
-	private ItemsController controller;
+	private ToDoListController controller;
 
 	@MockBean
-	private ItemsService service;
+	private ToDoListService service;
 
 	@Autowired
 	private ModelMapper mapper;
 
-	private ItemsDto mapToDto(Items items) {
-		return this.mapper.map(items, ItemsDto.class);
+	private ToDoListDto mapToDto(ToDoList toDoList) {
+		return this.mapper.map(toDoList, ToDoListDto.class);
 	}
 
 	private final Long testId = 1L;
+	
+	private final ToDoList toDoListTest1 = new ToDoList(1L, "Food");
+	private final ToDoList toDoListTest2 = new ToDoList(2L, "Games");
+	private final ToDoList toDoListTest3 = new ToDoList(3L, "Meats");
 
-	private final Items itemsTest1 = new Items(1L, "Bread", "50/50 mixed bread", true);
-	private final Items itemsTest2 = new Items(2L, "Sweets", "Lolly pops", false);
-	private final Items itemsTest3 = new Items(3L, "GTA", "2 copies", true);
-
-	private final List<Items> ListItems = List.of(itemsTest1, itemsTest2, itemsTest3);
+	private final List<ToDoList> ListToDoList = List.of(toDoListTest1, toDoListTest2, toDoListTest3);
+	
 
 	// CREATE
 	@Test
 	void createTest() throws Exception {
-		when(this.service.create(itemsTest1)).thenReturn(this.mapToDto(itemsTest1));
-		assertThat(new ResponseEntity<ItemsDto>(this.mapToDto(itemsTest1), HttpStatus.CREATED))
-				.isEqualTo(this.controller.create(itemsTest1));
-		verify(this.service, atLeastOnce()).create(itemsTest1);
+		when(this.service.create(toDoListTest1)).thenReturn(this.mapToDto(toDoListTest1));
+		assertThat(new ResponseEntity<ToDoListDto>(this.mapToDto(toDoListTest1), HttpStatus.CREATED))
+				.isEqualTo(this.controller.create(toDoListTest1));
+		verify(this.service, atLeastOnce()).create(toDoListTest1);
 	}
 
 	// READ ALL
 	@Test
 	void readAllTest() throws Exception {
-		List<Items> items = new ArrayList<>();
-		items.add(itemsTest1);
-		when(this.service.readAll()).thenReturn(items.stream().map(this::mapToDto).collect(Collectors.toList()));
-		assertThat(this.controller.read().getBody().isEmpty()).isFalse();
+		List<ToDoList> toDoList = new ArrayList<>();
+		toDoList.add(toDoListTest1);
+		when(this.service.readAll()).thenReturn(toDoList.stream().map(this::mapToDto).collect(Collectors.toList()));
+		assertThat(this.controller.readAll().getBody().isEmpty()).isFalse();
 		verify(this.service, atLeastOnce()).readAll();
 	}
 
 	// READ ONE
 	@Test
 	void readSolo() throws Exception {
-		ItemsDto expected = this.mapToDto(itemsTest1);
+		ToDoListDto expected = this.mapToDto(toDoListTest1);
 		when(this.service.readById(testId)).thenReturn(expected);
-		assertThat(new ResponseEntity<ItemsDto>(expected, HttpStatus.OK)).isEqualTo(this.controller.readSolo(testId));
+		assertThat(new ResponseEntity<ToDoListDto>(expected, HttpStatus.OK)).isEqualTo(this.controller.solo(testId));
 		verify(this.service, atLeastOnce()).readById(testId);
 	}
 
 	// UPDATE
 	@Test
 	void updateTest() throws Exception {
-		ItemsDto expected = this.mapToDto(itemsTest1);
+		ToDoListDto expected = this.mapToDto(toDoListTest1);
 		when(this.service.update(expected, testId)).thenReturn(expected);
-		assertThat(new ResponseEntity<ItemsDto>(expected, HttpStatus.ACCEPTED))
+		assertThat(new ResponseEntity<ToDoListDto>(expected, HttpStatus.ACCEPTED))
 				.isEqualTo(this.controller.update(testId, expected));
 		verify(this.service, atLeastOnce()).update(expected, testId);
 	}
@@ -91,4 +94,5 @@ public class ItemsControllerTest {
 		this.controller.delete(testId);
 		verify(this.service, atLeastOnce()).delete(testId);
 	}
+
 }
