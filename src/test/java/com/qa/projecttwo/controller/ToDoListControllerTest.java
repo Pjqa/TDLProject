@@ -25,7 +25,7 @@ import com.qa.projecttwo.persistence.domain.ToDoList;
 import com.qa.projecttwo.service.ToDoListService;
 
 @SpringBootTest
-@ActiveProfiles("dev")
+@ActiveProfiles("test")
 public class ToDoListControllerTest {
 	
 	@Autowired

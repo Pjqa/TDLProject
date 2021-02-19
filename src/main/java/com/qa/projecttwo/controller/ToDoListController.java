@@ -21,7 +21,7 @@ import com.qa.projecttwo.service.ToDoListService;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/toDoList")
+@RequestMapping("/todolist")
 public class ToDoListController {
 	
 	private ToDoListService service;
@@ -63,9 +63,4 @@ public class ToDoListController {
 		return new ResponseEntity <> (this.service.update(toDoListDto, id),HttpStatus.ACCEPTED);
 	}
 	
-	//CUSTOMMETHODS
-	@GetMapping ("/findByName/{name}")
-	public ResponseEntity <List<ToDoListDto>> findByName (@PathVariable String name){
-		return ResponseEntity.ok(this.service.findByName(name));
-		}
 }

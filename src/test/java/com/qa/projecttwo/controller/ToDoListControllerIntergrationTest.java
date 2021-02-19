@@ -40,7 +40,6 @@ public class ToDoListControllerIntergrationTest {
 	@Autowired
 	private ObjectMapper jsonifier;
 
-
 	@Autowired
 	private ModelMapper mapper;
 

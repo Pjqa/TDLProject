@@ -23,7 +23,7 @@ import com.qa.projecttwo.persistence.domain.Items;
 import com.qa.projecttwo.service.ItemsService;
 
 @SpringBootTest
-@ActiveProfiles("dev")
+@ActiveProfiles("test")
 public class ItemsControllerTest {
 
 	@Autowired

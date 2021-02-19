@@ -60,9 +60,4 @@ public class ToDoListService {
 		return this.mapToDto(this.repo.save(toUpdate));
 	}
 	
-	//CUSTOMMETHODS
-	public List <ToDoListDto> findByName (String name){
-		return this.repo.findByName(name).stream().map(this::mapToDto).collect(Collectors.toList());
-	}
-	
 }
