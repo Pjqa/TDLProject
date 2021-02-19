@@ -71,13 +71,20 @@ public class ToDoListControllerTest {
 
 	// READ ONE
 	@Test
-	void readSolo() throws Exception {
+	void readSoloTest() throws Exception {
 		ToDoListDto expected = this.mapToDto(toDoListTest1);
 		when(this.service.readById(testId)).thenReturn(expected);
 		assertThat(new ResponseEntity<ToDoListDto>(expected, HttpStatus.OK)).isEqualTo(this.controller.solo(testId));
 		verify(this.service, atLeastOnce()).readById(testId);
 	}
 
+	// DELETE
+		@Test
+		void deleteTest() throws Exception {
+			this.controller.delete(testId);
+			verify(this.service, atLeastOnce()).delete(testId);
+		}
+		
 	// UPDATE
 	@Test
 	void updateTest() throws Exception {
@@ -86,13 +93,6 @@ public class ToDoListControllerTest {
 		assertThat(new ResponseEntity<ToDoListDto>(expected, HttpStatus.ACCEPTED))
 				.isEqualTo(this.controller.update(testId, expected));
 		verify(this.service, atLeastOnce()).update(expected, testId);
-	}
-
-	// DELETE
-	@Test
-	void deleteTest() throws Exception {
-		this.controller.delete(testId);
-		verify(this.service, atLeastOnce()).delete(testId);
 	}
 
 }

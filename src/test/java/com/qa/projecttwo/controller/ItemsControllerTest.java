@@ -68,11 +68,18 @@ public class ItemsControllerTest {
 
 	// READ ONE
 	@Test
-	void readSolo() throws Exception {
+	void readSoloTest() throws Exception {
 		ItemsDto expected = this.mapToDto(itemsTest1);
 		when(this.service.readById(testId)).thenReturn(expected);
 		assertThat(new ResponseEntity<ItemsDto>(expected, HttpStatus.OK)).isEqualTo(this.controller.readSolo(testId));
 		verify(this.service, atLeastOnce()).readById(testId);
+	}
+	
+	// DELETE
+	@Test
+	void deleteTest() throws Exception {
+		this.controller.delete(testId);
+		verify(this.service, atLeastOnce()).delete(testId);
 	}
 
 	// UPDATE
@@ -85,10 +92,4 @@ public class ItemsControllerTest {
 		verify(this.service, atLeastOnce()).update(expected, testId);
 	}
 
-	// DELETE
-	@Test
-	void deleteTest() throws Exception {
-		this.controller.delete(testId);
-		verify(this.service, atLeastOnce()).delete(testId);
-	}
 }
