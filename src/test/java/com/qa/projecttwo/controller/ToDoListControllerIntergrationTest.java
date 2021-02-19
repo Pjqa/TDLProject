@@ -15,23 +15,21 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.web.servlet.MockMvc;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qa.projecttwo.dto.ItemsDto;
+
 import com.qa.projecttwo.dto.ToDoListDto;
-import com.qa.projecttwo.persistence.domain.Items;
 import com.qa.projecttwo.persistence.domain.ToDoList;
 
-@SpringBootTest 
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
+@Sql(scripts = {"classpath:my-data.sql", "classpath:my-schema.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 @ActiveProfiles("test")
-@Sql(scripts = { "classpath:schema.sql", "classpath:data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 public class ToDoListControllerIntergrationTest {
 
 	@Autowired
@@ -48,25 +46,25 @@ public class ToDoListControllerIntergrationTest {
 	}
 
 	private final Long testId = 1L;
-	
+
 	private final ToDoList toDoListTest1 = new ToDoList(1L, "Food");
 	private final ToDoList toDoListTest2 = new ToDoList(2L, "Games");
 	private final ToDoList toDoListTest3 = new ToDoList(3L, "Meats");
 
 	private final List<ToDoList> ListToDoList = List.of(toDoListTest1, toDoListTest2, toDoListTest3);
-	
+
 	private final String URI = "/todolist";
-	
+
 	// CREATE
 	@Test
 	void createTest() throws Exception {
 		ToDoListDto expected = this.mapToDto(toDoListTest1);
-		this.mvc.perform(post(URI + "/create").accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
-				.content(this.jsonifier.writeValueAsString(toDoListTest1))).andExpect(status().isCreated())
-				.andExpect(content().json(this.jsonifier.writeValueAsString(expected)));
+		this.mvc.perform(post(URI + "/create").accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON).content(this.jsonifier.writeValueAsString(toDoListTest1)))
+				.andExpect(status().isCreated()).andExpect(content().json(this.jsonifier.writeValueAsString(expected)));
 	}
-	
-	// READ ALL	
+
+	// READ ALL
 	@Test
 	void readTest() throws Exception {
 		List<ToDoListDto> toDoList = new ArrayList<>();
@@ -76,7 +74,7 @@ public class ToDoListControllerIntergrationTest {
 		this.mvc.perform(get(URI + "/read").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(content().json(this.jsonifier.writeValueAsString(toDoList)));
 	}
-	
+
 	// READ ONE
 	@Test
 	void readSoloTest() throws Exception {
@@ -84,19 +82,20 @@ public class ToDoListControllerIntergrationTest {
 		this.mvc.perform(get(URI + "/read/" + testId).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(content().json(this.jsonifier.writeValueAsString(expected)));
 	}
-	
+
 	// DELETE
 	@Test
 	void deleteTest() throws Exception {
 		this.mvc.perform(delete(URI + "/delete/" + testId)).andExpect(status().isNoContent());
 	}
-	
+
 	// UPDATE
 	@Test
 	void updateTest() throws Exception {
 		ToDoListDto expected = this.mapToDto(toDoListTest1);
-		this.mvc.perform(put(URI + "/update/" + testId).accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
-				.content(this.jsonifier.writeValueAsString(toDoListTest1))).andExpect(status().isAccepted())
+		this.mvc.perform(put(URI + "/update/" + testId).accept(MediaType.APPLICATION_JSON)
+				.contentType(MediaType.APPLICATION_JSON).content(this.jsonifier.writeValueAsString(toDoListTest1)))
+				.andExpect(status().isAccepted())
 				.andExpect(content().json(this.jsonifier.writeValueAsString(expected)));
 	}
 }
