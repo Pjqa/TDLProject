@@ -29,7 +29,7 @@ import com.qa.projecttwo.persistence.domain.ToDoList;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @Sql(scripts = {"classpath:my-data.sql", "classpath:my-schema.sql"}, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-@ActiveProfiles("test")
+@ActiveProfiles("dev")
 public class ToDoListControllerIntergrationTest {
 
 	@Autowired
