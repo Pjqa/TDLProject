@@ -96,9 +96,6 @@ Intergration tests for both controller classes and Controller tests:
 
 ```
 
-METHOD 1
-
-METHOD 2
 
 	// CREATE TODOLIST
 	@Test
