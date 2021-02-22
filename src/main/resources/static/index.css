@@ -1,0 +1,21 @@
+#text1, #text2, #textbox{
+    padding:100px;
+    margin: 30px;
+    text-align: center;
+    border-radius:10px
+}
+#text1, #text2, #textbox{
+    background-color:  rgba(25, 216, 41, 0.459);
+    text-size-adjust: 400px;
+    color: rgb(253, 0, 0);
+}
+h1{
+    color: rgb(0, 255, 34);
+    text-align: center;
+}
+body, .container{
+    background-color:  rgb(30, 30, 32);
+}
+nav{
+    background-color: aquamarine;
+}

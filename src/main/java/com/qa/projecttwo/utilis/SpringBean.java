@@ -1,13 +1,12 @@
 package com.qa.projecttwo.utilis;
 
-import static org.springframework.beans.BeanUtils.copyProperties;
-
 import java.beans.PropertyDescriptor;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
+import static org.springframework.beans.BeanUtils.copyProperties;
 
 public class SpringBean {
 
